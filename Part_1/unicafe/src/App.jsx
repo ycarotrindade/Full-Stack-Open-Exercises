@@ -1,13 +1,21 @@
 import { useState } from "react";
 
 const Statistics = ({feedbacksObject}) => {
+
+  const all = Object.values(feedbacksObject).reduce((sum, current) => sum + current)
+  const average = (feedbacksObject.good - feedbacksObject.bad) / all
+  const positive = feedbacksObject.good / all * 100
+
   return (
     <div>
       {Object.entries(feedbacksObject).map(([key, value]) => (
-        <div key={key}>
+        <p key={key}>
           {key} {value}
-        </div>
+        </p>
       ))}
+      <p>all {all}</p>
+      <p>average {average}</p>
+      <p>positive {positive} %</p>
     </div>
   )
 }
@@ -28,7 +36,7 @@ const App = () => {
   const feedBackObj = {
     good: good,
     neutral: neutral,
-    bad: bad
+    bad: bad,
   }
 
   const addFeedBackCounterHandler = (setState, state) => {
