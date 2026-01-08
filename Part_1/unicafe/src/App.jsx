@@ -3,6 +3,15 @@ import { useState } from "react";
 const Statistics = ({feedbacksObject}) => {
 
   const all = Object.values(feedbacksObject).reduce((sum, current) => sum + current)
+
+  if (all === 0){
+    return (
+      <div>
+        <p>No feedback given</p>
+      </div>
+    )
+  }
+
   const average = (feedbacksObject.good - feedbacksObject.bad) / all
   const positive = feedbacksObject.good / all * 100
 
