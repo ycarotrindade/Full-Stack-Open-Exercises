@@ -1,5 +1,13 @@
 import { useState } from "react";
 
+const StatisticLine = ({text, value}) => {
+  return (
+    <>
+      <p>{text} {value}</p>
+    </>
+  )
+}
+
 const Statistics = ({feedbacksObject}) => {
 
   const all = Object.values(feedbacksObject).reduce((sum, current) => sum + current)
@@ -18,13 +26,11 @@ const Statistics = ({feedbacksObject}) => {
   return (
     <div>
       {Object.entries(feedbacksObject).map(([key, value]) => (
-        <p key={key}>
-          {key} {value}
-        </p>
+        <StatisticLine text={key} value={value} />
       ))}
-      <p>all {all}</p>
-      <p>average {average}</p>
-      <p>positive {positive} %</p>
+      <StatisticLine text={"all"} value={all} />
+      <StatisticLine text={"average"} value={average} />
+      <StatisticLine text={"positive"} value={positive} />
     </div>
   )
 }
