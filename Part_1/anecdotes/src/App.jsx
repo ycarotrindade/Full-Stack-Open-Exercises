@@ -38,11 +38,18 @@ const App = () => {
 
   return (
     <div>
-      {anecdotes[selected]}<br/>
+      <h1>Anecdote of the day</h1>
+      <p>{anecdotes[selected]}</p>
       <p>has {anectdotesVotes[selected]} votes</p><br/>
 
       <VoteButton anectdotesVotes={anectdotesVotes} setanectdotesVotes={setanectdotesVotes} selected={selected}/>
       <NextAnecdote anecdotesLength={anecdotes.length} setAnecdote={setSelected}/>
+
+      <h1>Anecdote with most votes</h1>
+
+      <p>{anecdotes[anectdotesVotes.indexOf(Math.max(...anectdotesVotes))]}</p>
+      <p>has {anectdotesVotes[anectdotesVotes.indexOf(Math.max(...anectdotesVotes))]} votes</p>
+      
     </div>
   )
 }
