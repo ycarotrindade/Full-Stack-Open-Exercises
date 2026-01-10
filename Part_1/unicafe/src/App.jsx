@@ -3,7 +3,10 @@ import { useState } from "react";
 const StatisticLine = ({text, value}) => {
   return (
     <>
-      <p>{text} {value}</p>
+      <tr>
+        <td>{text}</td>
+        <td>{value}</td>
+      </tr>
     </>
   )
 }
@@ -25,12 +28,14 @@ const Statistics = ({feedbacksObject}) => {
 
   return (
     <div>
-      {Object.entries(feedbacksObject).map(([key, value]) => (
-        <StatisticLine text={key} value={value} />
-      ))}
-      <StatisticLine text={"all"} value={all} />
-      <StatisticLine text={"average"} value={average} />
-      <StatisticLine text={"positive"} value={positive} />
+      <table>
+        {Object.entries(feedbacksObject).map(([key, value]) => (
+          <StatisticLine text={key} value={value} />
+        ))}
+        <StatisticLine text={"all"} value={all} />
+        <StatisticLine text={"average"} value={average} />
+        <StatisticLine text={"positive"} value={positive + " %"} />
+      </table>
     </div>
   )
 }
