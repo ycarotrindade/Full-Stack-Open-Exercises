@@ -1,6 +1,6 @@
 const Course = ({course}) => {
-  let sumOfExercises = 0
-  course.parts.forEach(part => {sumOfExercises += part.exercises})
+  const sumOfExercises = course.parts.reduce((acc, current) => acc + current.exercises, 0)
+  //course.parts.forEach(part => {sumOfExercises += part.exercises})
   return (
     <>
       <Header course={course.name}/>
