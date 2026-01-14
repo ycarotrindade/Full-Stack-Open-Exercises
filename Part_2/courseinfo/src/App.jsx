@@ -1,9 +1,18 @@
 const Course = ({course}) => {
+  let sumOfExercises = 0
+  course.parts.forEach(part => {sumOfExercises += part.exercises})
   return (
     <>
       <Header course={course.name}/>
       <Content parts={course.parts}/>
+      <Total total={sumOfExercises}/>
     </>
+  )
+}
+
+const Total = ({total}) => {
+  return (
+    <p style={{fontWeight:"bold"}}>total of {total} exercises</p>
   )
 }
 
@@ -30,6 +39,7 @@ const Content = (props) => {
       <Part part={props.parts[0]}/>
       <Part part={props.parts[1]}/>
       <Part part={props.parts[2]}/>
+      <Part part={props.parts[3]}/>
     </>
   )
 }
@@ -53,6 +63,11 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }
