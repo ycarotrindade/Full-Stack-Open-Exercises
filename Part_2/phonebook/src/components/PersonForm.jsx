@@ -1,22 +1,4 @@
-const PersonForm = ({name, setName, phone, setPhone, persons, setPersons}) =>{
-
-    const handleNameChange = (event) => {
-        setName(event.target.value)
-    }
-
-    const handlePhoneChange = (event) => {
-        setPhone(event.target.value)
-    }
-
-    const handlePersonsSubmit = (event) => {
-        event.preventDefault()
-        const newPerson = {name:name, phone:phone, id:persons.length + 1}
-        if(persons.some(person => person.name === newPerson.name)){
-            alert(newPerson.name + " is already added to phonebook")
-        }else{
-            setPersons(persons.concat(newPerson))
-        }
-    }
+const PersonForm = ({name, phone, handleNameChange, handlePersonsSubmit, handlePhoneChange}) =>{
 
     return (
         <form onSubmit={handlePersonsSubmit}>
