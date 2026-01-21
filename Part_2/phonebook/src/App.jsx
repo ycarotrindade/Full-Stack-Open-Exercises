@@ -3,8 +3,14 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import PersonHandler from './services/PersonHandler'
+import Notification from './components/Notification'
 
 const App = () => {
+
+  const createNotification = (notificationObject) => {
+    setnotificationMessageObject(notificationObject)
+    setTimeout(() => setnotificationMessageObject({message:null, type:null}),2000)
+  }
 
   const fetchPersons = () => {
     PersonHandler.listPersons()
@@ -33,13 +39,17 @@ const App = () => {
           newPerson.id = persons.find(person => person.name === newPerson.name).id
           if(confirm(`${newPerson.name} is already added to phonebook, replace the old number with a new one?`)){
             PersonHandler.editPerson(newPerson)
-            .then(response => setPersons(persons.map(person => person.id === response.id ? response : person)))
+            .then(response => {
+              setPersons(persons.map(person => person.id === response.id ? response : person))
+              createNotification({message:`Modified ${response.name}`, type:"success"})
+            })
             .catch(e => alert(`Not possible to modify ${newPerson.name}; ${e}`))
           }
       }else{
           addPerson(newPerson)
           setNewName('')
           setNewPhone('')
+          createNotification({message:`Added ${newPerson.name}`,type:"success"})
       }
   }
 
@@ -58,12 +68,14 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
   const [filter, setFilter] = useState('')
+  const [notificationMessageObject, setnotificationMessageObject] = useState({message:null, type:null})
   
   const personsToShow = filter === '' ? persons : persons.filter(person => person.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()))
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notificationMessageObject.message} type={notificationMessageObject.type}/>
       <Filter filter={filter} setFilter={setFilter}/>
       <h2>add a new</h2>
       <PersonForm name={newName} phone={newPhone} handleNameChange={handleNameChange} handlePersonsSubmit={handlePersonsSubmit} handlePhoneChange={handlePhoneChange}/>
