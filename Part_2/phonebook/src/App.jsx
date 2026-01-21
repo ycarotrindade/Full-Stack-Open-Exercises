@@ -15,13 +15,17 @@ const App = () => {
   const fetchPersons = () => {
     PersonHandler.listPersons()
     .then(response => setPersons(response))
-    .catch(e => alert("Not possible to fetch persons. Try again later"))
+    .catch(e => {
+      createNotification({message:"Not possible to fetch persons. Try again later", type:"error"})
+    })
   }
 
   const addPerson = (personObject) => {
     PersonHandler.addPerson(personObject)
     .then(response => setPersons(persons.concat(response)))
-    .catch(e => alert(`Not possible to add person. ${e}`))
+    .catch(e => {
+      createNotification({message:`Not possible to add person. ${e}`, type:"error"})
+    })
   }
   
   const handleNameChange = (event) => {
@@ -43,7 +47,9 @@ const App = () => {
               setPersons(persons.map(person => person.id === response.id ? response : person))
               createNotification({message:`Modified ${response.name}`, type:"success"})
             })
-            .catch(e => alert(`Not possible to modify ${newPerson.name}; ${e}`))
+            .catch(e => {
+              createNotification({message:`Not possible to modify ${newPerson.name}; ${e}`, type:"error"})
+            })
           }
       }else{
           addPerson(newPerson)
@@ -58,7 +64,9 @@ const App = () => {
     if(confirm(`Delete ${personToDelete.name}?`)){
       PersonHandler.deletePerson(personToDelete.id)
       .then(setPersons(persons.filter(person => person.id !== personToDelete.id)))
-      .catch(e => alert(`Not possible to delete ${personToDelete.name}; ${e}`))
+      .catch(e => {
+        createNotification({message:`Not possible to delete ${personToDelete.name}; ${e}`, type:"error"})
+      })
     }
   }
 
