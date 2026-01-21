@@ -38,6 +38,15 @@ const App = () => {
       }
   }
 
+  const handleDeletePerson = (id) => {
+    const personToDelete = persons.filter(person => person.id === id)[0]
+    if(confirm(`Delete ${personToDelete.name}?`)){
+      PersonHandler.deletePerson(personToDelete.id)
+      .then(setPersons(persons.filter(person => person.id !== personToDelete.id)))
+      .catch(e => `Not possible to delete ${personToDelete.name}; ${e}`)
+    }
+  }
+
   const [persons, setPersons] = useState([]) 
   useEffect(fetchPersons,[])
 
@@ -54,7 +63,7 @@ const App = () => {
       <h2>add a new</h2>
       <PersonForm name={newName} phone={newPhone} handleNameChange={handleNameChange} handlePersonsSubmit={handlePersonsSubmit} handlePhoneChange={handlePhoneChange}/>
       <h2>Numbers</h2>
-      <Persons persons={personsToShow}/>
+      <Persons persons={personsToShow} handleDeletePerson={handleDeletePerson}/>
     </div>
   )
 }

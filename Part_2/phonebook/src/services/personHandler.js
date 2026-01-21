@@ -12,4 +12,10 @@ const addPerson = (personObject) => {
     return request.then(response => response.data)
 }
 
-export default {listPersons, addPerson}
+const deletePerson = (id) => {
+    const url = `http://localhost:3001/persons/${id}`
+    const request = axios.delete(url)
+    return request.then(response => response.data)
+}
+
+export default {listPersons, addPerson, deletePerson}
