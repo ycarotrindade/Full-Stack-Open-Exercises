@@ -28,9 +28,14 @@ const App = () => {
 
   const handlePersonsSubmit = (event) => {
       event.preventDefault()
-      const newPerson = {name:newName, number:newPhone}
+      let newPerson = {name:newName, number:newPhone}
       if(persons.some(person => person.name === newPerson.name)){
-          alert(newPerson.name + " is already added to phonebook")
+          newPerson.id = persons.find(person => person.name === newPerson.name).id
+          if(confirm(`${newPerson.name} is already added to phonebook, replace the old number with a new one?`)){
+            PersonHandler.editPerson(newPerson)
+            .then(response => setPersons(persons.map(person => person.id === response.id ? response : person)))
+            .catch(e => alert(`Not possible to modify ${newPerson.name}; ${e}`))
+          }
       }else{
           addPerson(newPerson)
           setNewName('')
@@ -43,7 +48,7 @@ const App = () => {
     if(confirm(`Delete ${personToDelete.name}?`)){
       PersonHandler.deletePerson(personToDelete.id)
       .then(setPersons(persons.filter(person => person.id !== personToDelete.id)))
-      .catch(e => `Not possible to delete ${personToDelete.name}; ${e}`)
+      .catch(e => alert(`Not possible to delete ${personToDelete.name}; ${e}`))
     }
   }
 

@@ -18,4 +18,10 @@ const deletePerson = (id) => {
     return request.then(response => response.data)
 }
 
-export default {listPersons, addPerson, deletePerson}
+const editPerson = (editedPerson) => {
+    const url = `http://localhost:3001/persons/${editedPerson.id}`
+    const request = axios.put(url, editedPerson)
+    return request.then(response => response.data)
+}
+
+export default {listPersons, addPerson, deletePerson, editPerson}
