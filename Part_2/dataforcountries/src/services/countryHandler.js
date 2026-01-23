@@ -6,4 +6,10 @@ const fetchAllCountries = () => {
     return request.then(response => response.data)
 }
 
-export default {fetchAllCountries}
+const fetchCountryCapitalWeather = (capitalName) =>{
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(capitalName)}&appid=${import.meta.env.VITE_OPENWEATHER_API_KEY}&units=metric`
+    const request = axios.get(url)
+    return request.then(response => response.data)
+}
+
+export default {fetchAllCountries, fetchCountryCapitalWeather}
